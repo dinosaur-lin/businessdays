@@ -15,6 +15,7 @@ _build/
 # ocamlbuild targets
 *.byte
 *.native
+src/.merlin
 
 # oasis generated files
 setup.data

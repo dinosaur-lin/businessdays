@@ -49,3 +49,18 @@ let is_independence_day dt =
 let is_chrismas_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
   dt = ((Date.create_exn ~y:y ~m:Month.Dec ~d:25) |> adjust_weekend_holiday_US)
+
+let is_holiday_settlement dt =
+  if Date.is_weekend dt ||
+     is_washington_birthday dt ||
+     is_memorial_day dt ||
+     is_columbus_day dt ||
+     is_labor_day dt ||
+     is_veterans_day dt ||
+     is_new_year_day dt ||
+     is_martin_luther_king_birthday dt ||
+     is_thanksgiving_day dt ||
+     is_independence_day dt ||
+     is_chrismas_day dt
+  then true
+  else false
