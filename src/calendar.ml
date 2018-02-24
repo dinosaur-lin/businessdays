@@ -16,7 +16,9 @@ type t = {
 }
 
 let cal_holiday_fun_tbl = Hashtbl.Poly.of_alist_exn [
-    (Weekends_only, Date.is_weekend)
+    (Weekends_only, Date.is_weekend);
+    (US_Settlement, Us.is_holiday_settlement);
+    (US_LiborImpact, Us.is_holiday_libor_impact)
   ]
 
 let init_cache_year t ~year ~is_holiday = 
@@ -39,7 +41,6 @@ let create cal_typ =
   let holiday_fun = Hashtbl.find_exn cal_holiday_fun_tbl cal_typ in
   init_cache t 1901 2199 holiday_fun;
   t
-
 
 let is_holiday t dt =
   match (Hash_set.find t.cache (fun d -> dt = d)) with

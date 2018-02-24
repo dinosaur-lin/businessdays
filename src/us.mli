@@ -35,3 +35,6 @@ val is_chrismas_day: Date.t -> bool
 
 (** is a holiday in US settlement calendar *)
 val is_holiday_settlement: Date.t -> bool
+
+(** is a holiday in US libor impact calendar *)
+val is_holiday_libor_impact: Date.t -> bool

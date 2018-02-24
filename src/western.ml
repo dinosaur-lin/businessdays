@@ -34,7 +34,8 @@ let easter_mondays = [|
   116; 101; 93; 112; 97; 89; 109; 100; 85; 105 (* 2190-2199 *)
 |]
 
-let is_easter_monday ~year ~dt = 
+let is_easter_monday dt = 
+  let year = Date.year dt in
   let begin_dt = Date.create_exn ~y:year ~m:Month.Jan ~d:1 in
   let days = Array.get easter_mondays (year - 1901) in
   (Date.add_days begin_dt days) = dt
