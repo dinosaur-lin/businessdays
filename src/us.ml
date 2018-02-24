@@ -2,10 +2,10 @@ open! Core_kernel
 
 let adjust_weekend_holiday_US dt =
   let d = Date.day_of_week dt in
-  match d with 
+  match d with
   | Day_of_week.Sat -> Date.add_days dt (-1)
   | Day_of_week.Sun -> Date.add_days dt 1 
-  | _ -> dt  
+  | _ -> dt
 
 let is_washington_birthday dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in

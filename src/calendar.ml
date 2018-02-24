@@ -18,7 +18,8 @@ type t = {
 let cal_holiday_fun_tbl = Hashtbl.Poly.of_alist_exn [
     (Weekends_only, Date.is_weekend);
     (US_Settlement, Us.is_holiday_settlement);
-    (US_LiborImpact, Us.is_holiday_libor_impact)
+    (US_LiborImpact, Us.is_holiday_libor_impact);
+    (US_GovernmentBond, Us.is_holiday_government_bond)
   ]
 
 let init_cache_year t ~year ~is_holiday = 
