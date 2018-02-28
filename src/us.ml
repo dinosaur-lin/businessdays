@@ -53,42 +53,49 @@ let is_chrismas_day dt =
 let is_good_friday dt =  
   Western.is_easter_monday (Date.add_days dt 3)
 
-let is_holiday_settlement dt =
-  if Date.is_weekend dt ||
-     is_new_year_day dt ||
-     is_martin_luther_king_birthday dt ||
-     is_washington_birthday dt ||
-     is_memorial_day dt ||
-     is_columbus_day dt ||
-     is_labor_day dt ||
-     is_veterans_day dt ||          
-     is_thanksgiving_day dt ||
-     is_independence_day dt ||
-     is_chrismas_day dt
-  then true
-  else false
+module Settlement = struct
+  let is_holiday dt = 
+    if Date.is_weekend dt ||
+       is_new_year_day dt ||
+       is_martin_luther_king_birthday dt ||
+       is_washington_birthday dt ||
+       is_memorial_day dt ||
+       is_columbus_day dt ||
+       is_labor_day dt ||
+       is_veterans_day dt ||          
+       is_thanksgiving_day dt ||
+       is_independence_day dt ||
+       is_chrismas_day dt
+    then true
+    else false
+end
 
-(** Since 2015 Independence Day only impacts Libor if it falls
-   on a weekday *)
-let is_holiday_libor_impact dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  if (d = 5 && w = Day_of_week.Mon || d = 3 && w = Day_of_week.Fri)
-  && m = Month.Jul && y >= 2015
-  then false
-    else is_holiday_settlement dt
+module Libor_impact = struct
 
-let is_holiday_government_bond dt =  
-  if Date.is_weekend dt ||
-     is_new_year_day dt ||
-     is_martin_luther_king_birthday dt ||
-     is_washington_birthday dt ||     
-     is_good_friday dt ||
-     is_memorial_day dt ||
-     is_columbus_day dt ||
-     is_labor_day dt ||
-     is_veterans_day dt ||          
-     is_thanksgiving_day dt ||
-     is_independence_day dt ||
-     is_chrismas_day dt
-  then true
-  else false
+  (** Since 2015 Independence Day only impacts Libor if it falls
+      on a weekday *)
+  let is_holiday dt =
+    let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+    if (d = 5 && w = Day_of_week.Mon || d = 3 && w = Day_of_week.Fri)
+    && m = Month.Jul && y >= 2015
+    then false
+    else Settlement.is_holiday dt
+end
+
+module Government_bond = struct
+  let is_holiday dt =
+    if Date.is_weekend dt ||
+       is_new_year_day dt ||
+       is_martin_luther_king_birthday dt ||
+       is_washington_birthday dt ||     
+       is_good_friday dt ||
+       is_memorial_day dt ||
+       is_columbus_day dt ||
+       is_labor_day dt ||
+       is_veterans_day dt ||          
+       is_thanksgiving_day dt ||
+       is_independence_day dt ||
+       is_chrismas_day dt
+    then true
+    else false
+end

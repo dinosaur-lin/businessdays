@@ -33,11 +33,14 @@ val is_thanksgiving_day: Date.t -> bool
 (** Christmas, December 25th (moved to Monday if Sunday or Friday if Saturday)*)
 val is_chrismas_day: Date.t -> bool
 
-(** is a holiday in US settlement calendar *)
-val is_holiday_settlement: Date.t -> bool
+module Settlement : sig
+  val is_holiday: Date.t -> bool 
+end
 
-(** is a holiday in US libor impact calendar *)
-val is_holiday_libor_impact: Date.t -> bool
+module Libor_impact : sig
+  val is_holiday: Date.t -> bool 
+end
 
-(** is a holiday in US government bond calendar *)
-val is_holiday_government_bond: Date.t -> bool
+module Government_bond : sig
+  val is_holiday: Date.t -> bool 
+end
