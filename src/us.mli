@@ -34,13 +34,13 @@ val is_thanksgiving_day: Date.t -> bool
 val is_chrismas_day: Date.t -> bool
 
 module Settlement : sig
-  val is_holiday: Date.t -> bool 
+  include Holidayable_intf.S
 end
 
 module Libor_impact : sig
-  val is_holiday: Date.t -> bool 
+  include Holidayable_intf.S
 end
 
 module Government_bond : sig
-  val is_holiday: Date.t -> bool 
+  include Holidayable_intf.S
 end
