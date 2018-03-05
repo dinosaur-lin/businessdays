@@ -8,7 +8,7 @@ type calendar_type =
   |US_NERC
   |US_LiborImpact
   |US_FederalReserve
-  [@@deriving sexp, compare]
+[@@deriving sexp, compare]
 
 type t = {
   cal_type: calendar_type;
@@ -50,3 +50,12 @@ let is_holiday t dt =
 
 let is_business_day t dt =
   not (is_holiday t dt)
+
+let rec business_days_between t dt1 dt2 =
+  if dt1 = dt2 then 0
+  else if is_business_day t dt1 then 1 + (business_days_between t (Date.add_days dt1 1) dt2)
+  else business_days_between t (Date.add_days dt1 1) dt2
+
+(** brute force of table look up doesn't work! since it will takes too much memory! *)
+(** table look up to return business days takes so much memory!: 365*300*365*300 *)
+(** caurc grain look up: table look up inside a day *)

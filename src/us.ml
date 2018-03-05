@@ -50,7 +50,7 @@ let is_chrismas_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
   dt = ((Date.create_exn ~y:y ~m:Month.Dec ~d:25) |> adjust_weekend_holiday_US)
 
-let is_good_friday dt =  
+let is_good_friday dt =
   Western.is_easter_monday (Date.add_days dt 3)
 
 module Settlement = struct
@@ -62,7 +62,7 @@ module Settlement = struct
        is_memorial_day dt ||
        is_columbus_day dt ||
        is_labor_day dt ||
-       is_veterans_day dt ||          
+       is_veterans_day dt ||
        is_thanksgiving_day dt ||
        is_independence_day dt ||
        is_chrismas_day dt
