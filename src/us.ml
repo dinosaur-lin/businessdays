@@ -87,12 +87,12 @@ module Government_bond = struct
     if Date.is_weekend dt ||
        is_new_year_day dt ||
        is_martin_luther_king_birthday dt ||
-       is_washington_birthday dt ||     
+       is_washington_birthday dt ||
        is_good_friday dt ||
        is_memorial_day dt ||
        is_columbus_day dt ||
        is_labor_day dt ||
-       is_veterans_day dt ||          
+       is_veterans_day dt ||
        is_thanksgiving_day dt ||
        is_independence_day dt ||
        is_chrismas_day dt
