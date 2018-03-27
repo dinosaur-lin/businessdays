@@ -1,8 +1,2 @@
-open! Core_kernel
+include Calendar_intf.Calendar
 
-module Make (H: Holidayable_intf.S) :
-sig
-  type t = Date.Hash_set.t
-  val create: unit -> t
-  val is_holiday: t -> Date.t -> bool
-end
