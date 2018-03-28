@@ -16,6 +16,7 @@ _build/
 *.byte
 *.native
 src/.merlin
+test/.merlin
 
 # oasis generated files
 setup.data
