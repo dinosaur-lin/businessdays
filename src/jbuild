@@ -3,9 +3,7 @@
 (library ((name businessdays)
   (public_name businessdays)  
   (flags (:standard -safe-string))
-   (preprocess (pps (ppx_jane)))
   (libraries (
     core_kernel
-    ppx_jane
   ))
 ))

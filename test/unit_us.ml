@@ -33,6 +33,9 @@ module To_test = struct
   let test_christmas_day () =
     Date.create_exn 2018 Dec 25 |> Us.is_chrismas_day
 
+  let test_good_friday () =
+    Date.create_exn 2018 Mar 30 |> Us.is_good_friday
+
 end
 
 let test_new_year_day () =
@@ -65,6 +68,9 @@ let test_thanksgiving_day () =
 let test_christmas_day () =
   Alcotest.(check bool) "test christmas day" true (To_test.test_christmas_day ())
 
+let test_good_friday () =
+  Alcotest.(check bool) "test good friday" true (To_test.test_good_friday ())  
+
 let test_set = [
   "test new year day", `Slow, test_new_year_day;
   "test martin luther king birthday", `Slow, test_martin_luther_king_birthday;
@@ -76,4 +82,5 @@ let test_set = [
   "test veterans day", `Slow, test_veterans_day;
   "test thanksgiving day", `Slow, test_thanksgiving_day;
   "test christmas day", `Slow, test_christmas_day;
+  "test good friday", `Slow, test_good_friday;
 ]

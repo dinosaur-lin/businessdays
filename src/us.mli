@@ -33,6 +33,8 @@ val is_thanksgiving_day: Date.t -> bool
 (** Christmas, December 25th (moved to Monday if Sunday or Friday if Saturday)*)
 val is_chrismas_day: Date.t -> bool
 
+val is_good_friday: Date.t -> bool
+
 module Settlement : sig
   include Holidayable_intf.S
 end
