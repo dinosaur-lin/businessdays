@@ -37,5 +37,6 @@ let easter_mondays = [|
 let is_easter_monday dt = 
   let year = Date.year dt in
   let begin_dt = Date.create_exn year Jan 1 in
+  if year > 2199 then false else                            
   let days = Array.get easter_mondays (year - 1901) in
   Date.add_days begin_dt (days-1) = dt

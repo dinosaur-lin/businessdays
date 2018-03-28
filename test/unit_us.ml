@@ -34,7 +34,7 @@ module To_test = struct
     Date.create_exn 2018 Dec 25 |> Us.is_chrismas_day
 
   let test_good_friday () =
-    Date.create_exn 2018 Mar 30 |> Us.is_good_friday
+    Date.create_exn 2018 Mar 30 |> Us.is_good_friday    
 
 end
 
