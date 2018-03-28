@@ -14,7 +14,7 @@ let is_washington_birthday dt =
 
 let is_memorial_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  if y >= 1971 then d >=25 && w = Day_of_week.Mon && m = Month.Feb (* last *)
+  if y >= 1971 then d >=25 && w = Day_of_week.Mon && m = Month.May (* last *)
   else dt = ((Date.create_exn ~y:y ~m:Month.May ~d:30) |> adjust_weekend_holiday_US)
 
 let is_labor_day dt =
@@ -27,7 +27,7 @@ let is_columbus_day dt =
 
 let is_veterans_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn ~y:y ~m:Month.Nov ~d:11) |> adjust_weekend_holiday_US)
+  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn y Month.Nov 11) |> adjust_weekend_holiday_US)
   else Utils.is_day_in_nth_week 4 d && w = Day_of_week.Mon && m = Month.Oct
 
 let is_new_year_day dt =
