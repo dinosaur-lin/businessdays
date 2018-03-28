@@ -30,5 +30,4 @@ end
 
 module US_settlement = Make(Us.Settlement)
 module US_libor_impact = Make(Us.Libor_impact)
-module US_government_bond = Make(Us.Government_bond
-)
+module US_government_bond = Make(Us.Government_bond)
