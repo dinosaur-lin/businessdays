@@ -8,7 +8,7 @@ struct
     let begin_date = (Date.create_exn ~y:year ~m:Month.Jan ~d:1) in
     let y_days = if Date.is_leap_year year then 366 else 365 in
     List.range 1 y_days ~stop:`inclusive |>
-    List.map ~f:(fun d -> Date.add_days begin_date d) |>
+    List.map ~f:(fun d -> Date.add_days begin_date (d-1)) |>
     List.iter ~f:(fun dt -> if is_holiday dt then Hash_set.add t dt else ())  
 
   let init_cache t start_year end_year is_holiday_local = 
@@ -30,4 +30,5 @@ end
 
 module US_settlement = Make(Us.Settlement)
 module US_libor_impact = Make(Us.Libor_impact)
-module US_government_bond = Make(Us.Government_bond)
+module US_government_bond = Make(Us.Government_bond
+)
