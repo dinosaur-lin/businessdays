@@ -18,7 +18,7 @@ module To_test = struct
       c 2017 Dec 25;
     ] in
     let cal = US_settlement.create () in
-    List.for_all holidays ~f:(fun dt -> US_settlement.is_holiday cal dt)
+    List.for_all holidays ~f:(fun dt -> is_holiday cal dt)
 
   let test_us_government_bond () =    
     let holidays = [
@@ -33,7 +33,7 @@ module To_test = struct
       c 2016 Dec 26;
     ] in
     let cal = US_government_bond.create () in
-    List.for_all holidays ~f:(fun dt -> US_government_bond.is_holiday cal dt)
+    List.for_all holidays ~f:(fun dt -> is_holiday cal dt)
 
 end
 
