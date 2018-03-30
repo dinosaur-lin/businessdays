@@ -1,4 +1,5 @@
 open! Core_kernel
+open Business_day_convention
 
 type t = Date.Hash_set.t
 
@@ -18,6 +19,12 @@ let is_holiday t dt =
   match (Hash_set.find t (fun d -> dt = d)) with
   | Some _ -> true
   | None -> false
+
+let rec adjust t dt c =
+  if not (is_holiday t dt) then dt 
+  else match c with
+  | Following -> adjust t (Date.add_days dt 1) c 
+  | Preceding -> adjust t (Date.add_days dt (-1)) c
 
 module Make (H: Holidayable_intf.S) =
 struct

@@ -35,6 +35,15 @@ module To_test = struct
     let cal = US_government_bond.create () in
     List.for_all holidays ~f:(fun dt -> is_holiday cal dt)
 
+  let test_ajust_following () =
+    let cal = US_government_bond.create () in
+    print_endline (adjust cal (c 2018 Mar 30) Business_day_convention.Following |> Date.sexp_of_t |> Sexp.to_string);
+    adjust cal (c 2018 Mar 30) Business_day_convention.Following = c 2018 Apr 2
+    
+  let test_ajust_preceding () =
+    let cal = US_government_bond.create () in
+    adjust cal (c 2018 Mar 30) Business_day_convention.Preceding = c 2018 Mar 29
+
 end
 
 let test_settlement () =
@@ -43,7 +52,16 @@ let test_settlement () =
 let test_government_bond () =
   Alcotest.(check bool) "test US government bond" true (To_test.test_us_government_bond ())
 
+let test_adjust_following () =
+  Alcotest.(check bool) "test adjust following " true (To_test.test_ajust_following ())
+
+let test_adjust_preceding () =
+  Alcotest.(check bool) "test adjust preceding " true (To_test.test_ajust_preceding ())  
+
 let test_set = [
   "test US settlement", `Slow, test_settlement;
   "test US government bond", `Slow, test_government_bond;
+  "test adjust following", `Slow, test_adjust_following;
+  "test adjust preceding", `Slow, test_adjust_preceding;
 ]
+
