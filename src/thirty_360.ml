@@ -17,6 +17,35 @@ module Make(A: Date_adjust_intf.S) = struct
 
 end
 
-module US = Make(Date_adjust.US)
-module IT = Make(Date_adjust.IT)
-module EU = Make(Date_adjust.EU)
+module BondBasis_adjust = Make(Date_adjust.BondBasis_adjust)
+module Italian_adjust = Make(Date_adjust.Italian_adjust)
+module EuroBondBasis_adjust = Make(Date_adjust.EuroBondBasis_adjust)
+
+module BondBasis = struct
+  include BondBasis_adjust
+  let name = "30/360 (Bond Basis)"
+end
+
+module EuroBondBasis = struct
+  include EuroBondBasis_adjust
+  let name = "30E/360 (Eurobond Basis)"
+end
+
+module Italian = struct
+  include Italian_adjust
+  let name = "30/360 (Italian)"
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

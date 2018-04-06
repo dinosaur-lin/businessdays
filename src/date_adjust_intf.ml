@@ -5,7 +5,7 @@ module type S = sig
 end
 
 module type Date_adjust = sig
-  module US: S
-  module IT: S
-  module EU: S
+  module BondBasis_adjust: S
+  module Italian_adjust: S
+  module EuroBondBasis_adjust: S
 end
