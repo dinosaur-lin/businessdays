@@ -35,17 +35,3 @@ module Italian = struct
   include Italian_adjust
   let name = "30/360 (Italian)"
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
