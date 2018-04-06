@@ -29,10 +29,10 @@ module To_test = struct
     ]
 
   let test_thirty_360_bond_basis () =
-    List.map test_data (fun (dt1,dt2) -> Thirty_360.US.day_count dt1 dt2)
+    List.map test_data (fun (dt1,dt2) -> Thirty_360.BondBasis.day_count dt1 dt2)
 
   let test_thirty_360_euro_bond_basis () =
-    List.map test_data (fun (dt1,dt2) -> Thirty_360.EU.day_count dt1 dt2)
+    List.map test_data (fun (dt1,dt2) -> Thirty_360.EuroBondBasis.day_count dt1 dt2)
 end
 
 let test_thirty_360_bond_basis () =
