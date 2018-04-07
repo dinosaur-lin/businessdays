@@ -10,4 +10,6 @@ module Make(Cal: Calendar_intf.S) = struct
 
   let name = "Business/252(" ^ Cal.name ^ ")"
 
+  (** let day_count dt1 dt2 = *)
+
 end
