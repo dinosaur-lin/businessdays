@@ -21,11 +21,23 @@ let is_holiday t dt =
   | Some _ -> true
   | None -> false
 
+let name t = t.name
+
 let rec adjust t dt c =
   if not (is_holiday t dt) then dt 
   else match c with
-  | Following -> adjust t (Date.add_days dt 1) c 
-  | Preceding -> adjust t (Date.add_days dt (-1)) c
+    | Following -> adjust t (Date.add_days dt 1) c 
+    | Preceding -> adjust t (Date.add_days dt (-1)) c
+
+let business_days_between t dt1 dt2 =
+  let rec aux_b_days t dt1 dt2 =
+    if dt1 = dt2 then 0
+    else if is_holiday t dt1 then aux_b_days t (Date.add_days dt1 1) dt2
+    else 1 + (aux_b_days t (Date.add_days dt1 1) dt2) in
+  let c = Date.compare dt1 dt2 in
+  if c = 0 then 0
+  else if c < 0 then aux_b_days t dt1 dt2
+  else -(aux_b_days t dt2 dt1)
 
 module Make (H: Holidayable_intf.S)(N: Calendar_intf.N) =
 struct
