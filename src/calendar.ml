@@ -4,12 +4,44 @@ open Business_day_convention
 type t = { cache: Date.Hash_set.t;
            name: string; }
 
-let init_cache_year t ~year ~is_holiday = 
+let days year month =
+  match month with
+  | Month.Jan -> 31
+  | Month.Feb -> if Date.is_leap_year year then 29 else 28
+  | Month.Mar -> 31
+  | Month.Apr -> 30
+  | Month.May -> 31
+  | Month.Jun -> 30
+  | Month.Jul -> 31
+  | Month.Aug -> 31
+  | Month.Sep -> 30
+  | Month.Oct -> 31
+  | Month.Nov -> 30
+  | Month.Dec -> 31
+
+let is_end_of_month dt =
+  let m = Date.month dt in 
+  let d = Date.day dt in
+  match m with
+  | Month.Jan -> d = 31
+  | Month.Feb -> if Date.is_leap_year ~year:(Date.year dt) then d = 29 else d = 28
+  | Month.Mar -> d = 31
+  | Month.Apr -> d = 30
+  | Month.May -> d = 31
+  | Month.Jun -> d = 30
+  | Month.Jul -> d = 31
+  | Month.Aug -> d = 31
+  | Month.Sep -> d = 30
+  | Month.Oct -> d = 31
+  | Month.Nov -> d = 30
+  | Month.Dec -> d = 31
+
+let init_cache_year t ~year ~is_holiday =
   let begin_date = (Date.create_exn year Jan 1) in
   let y_days = if Date.is_leap_year year then 366 else 365 in
   List.range 1 y_days ~stop:`inclusive |>
   List.map ~f:(fun d -> Date.add_days begin_date (d-1)) |>
-  List.iter ~f:(fun dt -> if is_holiday dt then Hash_set.add t.cache dt else ())  
+  List.iter ~f:(fun dt -> if is_holiday dt then Hash_set.add t.cache dt else ())
 
 let init_cache t start_year end_year is_holiday_local = 
   for i = start_year to end_year do

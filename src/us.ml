@@ -84,8 +84,8 @@ end
 
 module Government_bond = struct
   let is_holiday dt =
-    if Settlement.is_holiday dt ||       
-       is_good_friday dt       
+    if Settlement.is_holiday dt ||
+       is_good_friday dt
     then true
     else false
 end
