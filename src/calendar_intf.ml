@@ -16,6 +16,8 @@ module type Calendar = sig
   type t = { cache: Date.Hash_set.t;
              name: string; }
 
+  val name: t -> string
+
   val is_end_of_month: Date.t -> bool
 
   (** number of days for this month in a year *)

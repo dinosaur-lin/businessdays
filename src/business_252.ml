@@ -18,9 +18,13 @@ let business_days_year cal year =
   List.reduce_exn ~f:(fun a b -> a + b)
 
 let business_days_year_month_from_cache cache cal year month =
-  let iner_cache = Hashtbl.find_or_add cache year ~default:(fun _ -> Hashtbl.create (module Month) ()) in
-  Hashtbl.find_or_add iner_cache month ~default:(fun _ -> business_days_month cal year month)
+  let outer_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int) ()) in
+  let inner_cache = Hashtbl.find_or_add outer_cache year ~default:(fun _ -> Hashtbl.create (module Month) ()) in
+  Hashtbl.find_or_add inner_cache month ~default:(fun _ -> business_days_month cal year month)
 
+let business_days_year_from_cache cache cal year =
+  let inner_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int) ()) in
+  Hashtbl.find_or_add inner_cache year ~default:(fun _ -> business_days_year cal year)
 
 module Make(Cal: Calendar_intf.S) = struct
 
