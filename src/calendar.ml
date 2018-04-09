@@ -4,6 +4,8 @@ open Business_day_convention
 type t = { cache: Date.Hash_set.t;
            name: string; }
 
+let name t = t.name
+
 let days year month =
   match month with
   | Month.Jan -> 31
