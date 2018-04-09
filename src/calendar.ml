@@ -4,6 +4,21 @@ open Business_day_convention
 type t = { cache: Date.Hash_set.t;
            name: string; }
 
+let days year month =
+  match month with
+  | Month.Jan -> 31
+  | Month.Feb -> if Date.is_leap_year year then 29 else 28
+  | Month.Mar -> 31
+  | Month.Apr -> 30
+  | Month.May -> 31
+  | Month.Jun -> 30
+  | Month.Jul -> 31
+  | Month.Aug -> 31
+  | Month.Sep -> 30
+  | Month.Oct -> 31
+  | Month.Nov -> 30
+  | Month.Dec -> 31
+
 let is_end_of_month dt =
   let m = Date.month dt in 
   let d = Date.day dt in

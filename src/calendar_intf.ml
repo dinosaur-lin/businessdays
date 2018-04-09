@@ -18,6 +18,9 @@ module type Calendar = sig
 
   val is_end_of_month: Date.t -> bool
 
+  (** number of days for this month in a year *)
+  val days: int -> Month.t -> int
+
   (** whether a date is holiday or not *)
   val is_holiday: t -> Date.t -> bool
 
