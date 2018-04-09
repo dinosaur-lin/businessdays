@@ -17,8 +17,7 @@ module To_test = struct
       c 2017 Nov 23;
       c 2017 Dec 25;
     ] in
-    let cal = US_settlement.create () in
-    List.for_all holidays ~f:(fun dt -> is_holiday cal dt)
+    List.for_all holidays ~f:(fun dt -> is_holiday us_settlement dt)
 
   let test_us_government_bond () =
     let holidays = [
@@ -32,26 +31,22 @@ module To_test = struct
       c 2016 Nov 24;
       c 2016 Dec 26;
     ] in
-    let cal = US_government_bond.create () in
-    List.for_all holidays ~f:(fun dt -> is_holiday cal dt)
+    List.for_all holidays ~f:(fun dt -> is_holiday us_government_bond dt)
 
   let test_ajust_following () =
-    let cal = US_government_bond.create () in
-    adjust cal (c 2018 Mar 30) Business_day_convention.Following = c 2018 Apr 2
+    adjust us_government_bond (c 2018 Mar 30) Business_day_convention.Following = c 2018 Apr 2
 
   let test_ajust_preceding () =
-    let cal = US_government_bond.create () in
-    adjust cal (c 2018 Mar 30) Business_day_convention.Preceding = c 2018 Mar 29
+    adjust us_government_bond (c 2018 Mar 30) Business_day_convention.Preceding = c 2018 Mar 29
 
   let test_business_between () =
-    let cal = US_government_bond.create () in
     let dts =
       [(c 2018 Apr 7,c 2018 Apr 1);
        (c 2018 Apr 1,c 2018 Apr 7);
        (c 2018 Apr 1,c 2018 Apr 1);
        (c 2018 Jan 1,c 2018 Jan 16);
       ] in
-    List.map dts (fun (dt1,dt2) -> Calendar.business_days_between cal dt1 dt2)
+    List.map dts (fun (dt1,dt2) -> Calendar.business_days_between us_government_bond dt1 dt2)
 end
 
 let test_settlement () =

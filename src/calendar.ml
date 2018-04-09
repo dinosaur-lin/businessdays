@@ -6,7 +6,7 @@ type t = { cache: Date.Hash_set.t;
 
 let name t = t.name
 
-let days year month =
+let month_days year month =
   match month with
   | Month.Jan -> 31
   | Month.Feb -> if Date.is_leap_year year then 29 else 28
@@ -90,3 +90,7 @@ end
 module US_settlement = Make(Us.Settlement)(struct let name = "US settlement" end)
 module US_libor_impact = Make(Us.Libor_impact)(struct let name = "US with Libor impact" end)
 module US_government_bond = Make(Us.Government_bond)(struct let name = "US government bond market" end)
+
+let us_settlement = US_settlement.create ()
+let us_libor_impact = US_libor_impact.create ()
+let us_government_bond = US_government_bond.create ()
