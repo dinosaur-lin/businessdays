@@ -47,13 +47,33 @@ let last_month_days cal_type dt2 =
   let end_last_month = Date.add_days (Date.create_exn (Date.year dt2) (Date.month dt2) 1) (-1) in
   Calendar.business_days_between cal_type end_last_month dt2
 
+let month_days cal_type m1 m2 y =
+  let months = List.range ~stop:`inclusive m1 m2 in
+  List.map months ~f:(fun m -> business_days_year_month_from_cache year_month_cache cal_type y (Month.of_int_exn m)) |>
+  List.fold_left ~init:0 ~f:(fun a b -> a + b)
+
 let intermediate_month_days cal_type dt1 dt2 =
   let m1 = Date.month dt1 |> Month.to_int in
   let m2 = Date.month dt2 |> Month.to_int in
   let y = Date.year dt1 in
-  let months = List.range (m1 + 1) m2 in
-  List.map months ~f:(fun m -> business_days_year_month_from_cache year_month_cache cal_type y (Month.of_int_exn m)) |>
+  month_days cal_type (m1 + 1) (m2 - 1) y
+
+let intermediate_years_days cal_type dt1 dt2 =
+  let y1 = (Date.year dt1) in
+  let y2 = (Date.year dt2) in
+  List.range y1 y2 ~start:`exclusive ~stop:`exclusive |>
+  List.map ~f:(fun y -> business_days_year_from_cache year_cache cal_type y) |>
   List.fold_left ~init:0 ~f:(fun a b -> a + b)
+
+let remaining_month_days cal_type dt1 =
+  let m1 = (Date.month dt1 |> Month.to_int) + 1 in
+  let y = Date.year dt1 in
+  month_days cal_type (m1 + 1) 12 y
+
+let begin_month_days cal_type dt2 =
+  let m2 = (Date.month dt2 |> Month.to_int) + 1 in
+  let y = Date.year dt2 in
+  month_days cal_type 1 (m2-1) y
 
 module Make(Cal: sig val cal_type: Calendar.t end) = struct
 
@@ -62,10 +82,19 @@ module Make(Cal: sig val cal_type: Calendar.t end) = struct
   let day_count dt1 dt2 =
     if same_month dt1 dt2 || Date.(dt1 > dt2) then
       Calendar.business_days_between Cal.cal_type dt1 dt2
-    else if same_year dt1 dt2 then begin
-      let first_month = first_month_days Cal.cal_type dt1 in
+    else if same_year dt1 dt2 then 
+      let first = first_month_days Cal.cal_type dt1 in
       let inter = intermediate_month_days Cal.cal_type dt1 dt2 in
+      let last = last_month_days Cal.cal_type dt2 in
+      first + inter + last
+    else let first_month = first_month_days Cal.cal_type dt1 in
+      let remaining_month = remaining_month_days Cal.cal_type dt1 in
+      let inter_y = intermediate_years_days Cal.cal_type dt1 dt2 in
+      let begin_month = begin_month_days Cal.cal_type dt2 in
       let last_month = last_month_days Cal.cal_type dt2 in
-      first_month + inter + last_month
-    end else 0
+      first_month + remaining_month + inter_y + begin_month + last_month
+
+  let year_frac dt1 dt2 =
+    float_of_int(day_count dt1 dt2) /. 252.0
+
 end
