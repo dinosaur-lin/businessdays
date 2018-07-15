@@ -4,9 +4,9 @@ type year_cache = (int, int) Hashtbl.t
 
 type year_month_cache = (int, (Month.t,int) Hashtbl.t) Hashtbl.t
 
-let year_cache = Hashtbl.create (module String) ()
+let year_cache = Hashtbl.create (module String)
 
-let year_month_cache = Hashtbl.create (module String) ()
+let year_month_cache = Hashtbl.create (module String)
 
 let same_year dt1 dt2 =
   Date.year dt1 = Date.year dt2
@@ -26,12 +26,12 @@ let business_days_year cal year =
   List.reduce_exn ~f:(fun a b -> a + b)
 
 let business_days_year_month_from_cache cache cal year month =
-  let outer_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int) ()) in
-  let inner_cache = Hashtbl.find_or_add outer_cache year ~default:(fun _ -> Hashtbl.create (module Month) ()) in
+  let outer_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int)) in
+  let inner_cache = Hashtbl.find_or_add outer_cache year ~default:(fun _ -> Hashtbl.create (module Month)) in
   Hashtbl.find_or_add inner_cache month ~default:(fun _ -> business_days_month cal year month)
 
 let business_days_year_from_cache cache cal year =
-  let inner_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int) ()) in
+  let inner_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int)) in
   Hashtbl.find_or_add inner_cache year ~default:(fun _ -> business_days_year cal year)
 
 let begin_next_month dt =
