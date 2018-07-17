@@ -73,9 +73,9 @@ let business_days_between t dt1 dt2 =
   else if c < 0 then aux_b_days t dt1 dt2
   else -(aux_b_days t dt2 dt1)
 
-let create name is_holiday = 
+let create n is_holiday = 
   let c = Date.Hash_set.create () in 
-  let typ = { cache = c; name = "US settlement"; } in
+  let typ = { cache = c; name = n; } in
   init_cache typ 1901 2199 is_holiday;
   typ
 
