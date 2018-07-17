@@ -4,37 +4,37 @@ open Businessdays
 module To_test = struct
 
   let test_new_year_day () =
-    Date.create_exn 2018 Jan 1 |> Us.is_new_year_day
+    Date.create_exn 2018 Jan 1 |> Us_holidays.is_new_year_day
 
   let test_martin_luther_king_birthday () =
-    Date.create_exn 2018 Jan 15 |> Us.is_martin_luther_king_birthday
+    Date.create_exn 2018 Jan 15 |> Us_holidays.is_martin_luther_king_birthday
 
   let test_washington_birthday () =
-    Date.create_exn 2018 Feb 19 |> Us.is_washington_birthday
+    Date.create_exn 2018 Feb 19 |> Us_holidays.is_washington_birthday
 
   let test_memorial_day () =
-    Date.create_exn 2018 May 28 |> Us.is_memorial_day
+    Date.create_exn 2018 May 28 |> Us_holidays.is_memorial_day
 
   let test_independence_day () =
-    Date.create_exn 2018 Jul 4 |> Us.is_independence_day
+    Date.create_exn 2018 Jul 4 |> Us_holidays.is_independence_day
 
   let test_labor_day () =
-    Date.create_exn 2018 Sep 3 |> Us.is_labor_day
+    Date.create_exn 2018 Sep 3 |> Us_holidays.is_labor_day
 
   let test_columbus_day () =
-    Date.create_exn 2018 Oct 8 |> Us.is_columbus_day
+    Date.create_exn 2018 Oct 8 |> Us_holidays.is_columbus_day
 
   let test_veterans_day () =
-    Date.create_exn 2018 Nov 12 |> Us.is_veterans_day
+    Date.create_exn 2018 Nov 12 |> Us_holidays.is_veterans_day
 
   let test_thanksgiving_day () =
-    Date.create_exn 2018 Nov 22 |> Us.is_thanksgiving_day
+    Date.create_exn 2018 Nov 22 |> Us_holidays.is_thanksgiving_day
 
   let test_christmas_day () =
-    Date.create_exn 2018 Dec 25 |> Us.is_chrismas_day
+    Date.create_exn 2018 Dec 25 |> Us_holidays.is_chrismas_day
 
   let test_good_friday () =
-    Date.create_exn 2018 Mar 30 |> Us.is_good_friday    
+    Date.create_exn 2018 Mar 30 |> Us_holidays.is_good_friday    
 
 end
 

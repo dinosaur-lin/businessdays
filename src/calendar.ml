@@ -86,10 +86,9 @@ struct
     typ
 end
 
-(** need to assign name! *)
-module US_settlement = Make(Us.Settlement)(struct let name = "US settlement" end)
-module US_libor_impact = Make(Us.Libor_impact)(struct let name = "US with Libor impact" end)
-module US_government_bond = Make(Us.Government_bond)(struct let name = "US government bond market" end)
+module US_settlement = Make(Us_holidays.Settlement)(struct let name = "US settlement" end)
+module US_libor_impact = Make(Us_holidays.Libor_impact)(struct let name = "US with Libor impact" end)
+module US_government_bond = Make(Us_holidays.Government_bond)(struct let name = "US government bond market" end)
 
 let us_settlement = US_settlement.create ()
 let us_libor_impact = US_libor_impact.create ()

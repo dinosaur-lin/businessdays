@@ -12,13 +12,13 @@ sig
   val name: string
 end
 
-(** calendar very static, so afford no state *)
 module type Calendar = sig
 
   type t = { cache: Date.Hash_set.t;
              name: string; }
 
   val name: t -> string
+  (** [name] return the name of the calendar *)
   
   val month_days: int -> Month.t -> int
   (** [month_days year month] number of days for this month [month] in a year [year] *)

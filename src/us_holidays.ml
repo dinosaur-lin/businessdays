@@ -1,6 +1,6 @@
 open! Core_kernel
 
-let adjust_weekend_holiday_US dt =
+let adjust_if_weekend dt =
   let d = Date.day_of_week dt in
   match d with
   | Day_of_week.Sat -> Date.add_days dt (-1)
@@ -10,12 +10,12 @@ let adjust_weekend_holiday_US dt =
 let is_washington_birthday dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
   if y >= 1971 then (Utils.is_day_in_nth_week 3 d) && w = Day_of_week.Mon && m = Month.Feb
-  else dt = ((Date.create_exn ~y:y ~m:Month.Feb ~d:22) |> adjust_weekend_holiday_US)
+  else dt = ((Date.create_exn ~y:y ~m:Month.Feb ~d:22) |> adjust_if_weekend)
 
 let is_memorial_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
   if y >= 1971 then d >=25 && w = Day_of_week.Mon && m = Month.May (* last *)
-  else dt = ((Date.create_exn ~y:y ~m:Month.May ~d:30) |> adjust_weekend_holiday_US)
+  else dt = ((Date.create_exn ~y:y ~m:Month.May ~d:30) |> adjust_if_weekend)
 
 let is_labor_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
@@ -27,12 +27,12 @@ let is_columbus_day dt =
 
 let is_veterans_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn y Month.Nov 11) |> adjust_weekend_holiday_US)
+  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn y Month.Nov 11) |> adjust_if_weekend)
   else Utils.is_day_in_nth_week 4 d && w = Day_of_week.Mon && m = Month.Oct
 
 let is_new_year_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  dt = ((Date.create_exn ~y:y ~m:Month.Jan ~d:1) |> adjust_weekend_holiday_US)
+  dt = ((Date.create_exn ~y:y ~m:Month.Jan ~d:1) |> adjust_if_weekend)
 
 let is_martin_luther_king_birthday dt = 
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
@@ -44,11 +44,11 @@ let is_thanksgiving_day dt =
 
 let is_independence_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  dt = ((Date.create_exn ~y:y ~m:Month.Jul ~d:4) |> adjust_weekend_holiday_US)
+  dt = ((Date.create_exn ~y:y ~m:Month.Jul ~d:4) |> adjust_if_weekend)
 
 let is_chrismas_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  dt = ((Date.create_exn ~y:y ~m:Month.Dec ~d:25) |> adjust_weekend_holiday_US)
+  dt = ((Date.create_exn ~y:y ~m:Month.Dec ~d:25) |> adjust_if_weekend)
 
 let is_good_friday dt =
   Western.is_easter_monday (Date.add_days dt 3)
