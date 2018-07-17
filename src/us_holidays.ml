@@ -53,6 +53,10 @@ let is_chrismas_day dt =
 let is_good_friday dt =
   Western.is_easter_monday (Date.add_days dt 3)
 
+module type Holidays = sig
+  val is_holiday: Date.t -> bool
+end
+  
 module Settlement = struct
   let is_holiday dt = 
     if Date.is_weekend dt ||

@@ -40,14 +40,18 @@ val is_chrismas_day: Date.t -> bool
 val is_good_friday: Date.t -> bool
 (** [is_good_friday dt] whether it is good Friday. *)
 
+module type Holidays = sig
+  val is_holiday: Date.t -> bool
+end
+
 module Settlement : sig
-  include Holidayable_intf.S
+  include Holidays
 end
 
 module Libor_impact : sig
-  include Holidayable_intf.S
+  include Holidays
 end
 
 module Government_bond : sig
-  include Holidayable_intf.S
+  include Holidays
 end

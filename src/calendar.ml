@@ -73,22 +73,23 @@ let business_days_between t dt1 dt2 =
   else if c < 0 then aux_b_days t dt1 dt2
   else -(aux_b_days t dt2 dt1)
 
-module Make (H: Holidayable_intf.S)(N: Calendar_intf.N) =
-struct
-  type t
+let create name is_holiday = 
+  let c = Date.Hash_set.create () in 
+  let typ = { cache = c; name = "US settlement"; } in
+  init_cache typ 1901 2199 is_holiday;
+  typ
 
-  let name = N.name
-
-  let create () =
-    let c = Date.Hash_set.create () in 
-    let typ = { cache = c; name = N.name; } in
-    init_cache typ 1901 2199 H.is_holiday;
-    typ
+module US_settlement = struct   
+  let create () = create "US settlement" Us_holidays.Settlement.is_holiday
 end
 
-module US_settlement = Make(Us_holidays.Settlement)(struct let name = "US settlement" end)
-module US_libor_impact = Make(Us_holidays.Libor_impact)(struct let name = "US with Libor impact" end)
-module US_government_bond = Make(Us_holidays.Government_bond)(struct let name = "US government bond market" end)
+module US_libor_impact = struct   
+  let create () = create "US Libor impact" Us_holidays.Libor_impact.is_holiday
+end
+
+module US_government_bond = struct   
+  let create () = create "US government bond" Us_holidays.Government_bond.is_holiday
+end
 
 let us_settlement = US_settlement.create ()
 let us_libor_impact = US_libor_impact.create ()

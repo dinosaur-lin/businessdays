@@ -1,15 +1,9 @@
 open! Core_kernel
 
-module type S =
-sig
+module type Calendar_maker =
+sig  
   type t
-  val name: string
   val create: unit -> t
-end
-
-module type N =
-sig
-  val name: string
 end
 
 module type Calendar = sig
@@ -37,15 +31,12 @@ module type Calendar = sig
   (** [business_days_between cal dt1 dt2] calculate the number of business days between two 
   days [dt1] and [dt2] *)
 
-  module Make (H: Holidayable_intf.S)(N: N) : S with type t := t 
-  module US_settlement : (S with type t := t)
-  module US_libor_impact : (S with type t := t)
-  module US_government_bond : (S with type t := t)
+  module US_settlement : (Calendar_maker with type t := t)
+  module US_libor_impact : (Calendar_maker with type t := t)
+  module US_government_bond : (Calendar_maker with type t := t)
 
   val us_settlement: t
-
   val us_libor_impact: t
-
   val us_government_bond: t
 
 end
