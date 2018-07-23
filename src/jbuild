@@ -1,9 +1,0 @@
-(jbuild_version 1)
-
-(library ((name businessdays)
-  (public_name businessdays)  
-  (flags (:standard -safe-string))
-  (libraries (
-    core_kernel
-  ))
-))

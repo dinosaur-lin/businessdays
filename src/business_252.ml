@@ -15,7 +15,7 @@ let same_month dt1 dt2 =
   Date.year dt1 = Date.year dt2 && Date.month dt1 = Date.month dt2
 
 let business_days_month cal year month =
-  let dt1 = Date.create_exn year month 1 in
+  let dt1 = Date.create_exn ~y:year ~m:month ~d:1 in
   let dt2 = Date.add_days dt1 (Calendar.month_days year month) in
   Calendar.business_days_between cal dt1 dt2
 
@@ -37,14 +37,14 @@ let business_days_year_from_cache cache cal year =
 let begin_next_month dt =
   let y = Date.year dt in
   let m = Date.month dt in
-  Date.add_days (Date.create_exn y m 1) (Calendar.month_days y m)
+  Date.add_days (Date.create_exn ~y:y ~m:m ~d:1) (Calendar.month_days y m)
 
 let first_month_days cal_type dt1 =
   let next_month_begin = begin_next_month dt1 in
   Calendar.business_days_between cal_type dt1 next_month_begin
 
 let last_month_days cal_type dt2 =
-  let end_last_month = Date.add_days (Date.create_exn (Date.year dt2) (Date.month dt2) 1) (-1) in
+  let end_last_month = Date.add_days (Date.create_exn ~y:(Date.year dt2) ~m:(Date.month dt2) ~d:1) (-1) in
   Calendar.business_days_between cal_type end_last_month dt2
 
 let month_days cal_type m1 m2 y =

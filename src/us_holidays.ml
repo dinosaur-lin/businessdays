@@ -18,7 +18,7 @@ let is_memorial_day dt =
   else dt = ((Date.create_exn ~y:y ~m:Month.May ~d:30) |> adjust_if_weekend)
 
 let is_labor_day dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+  let (d, m, _, w) = Utils.extract_day_month_year_weekday dt in
   Utils.is_day_in_nth_week 1 d && w = Day_of_week.Mon && m = Month.Sep
 
 let is_columbus_day dt =
@@ -27,11 +27,11 @@ let is_columbus_day dt =
 
 let is_veterans_day dt =
   let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
-  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn y Month.Nov 11) |> adjust_if_weekend)
+  if y <= 1970 || y >= 1978 then dt = ((Date.create_exn ~y:y ~m:Month.Nov ~d:11) |> adjust_if_weekend)
   else Utils.is_day_in_nth_week 4 d && w = Day_of_week.Mon && m = Month.Oct
 
 let is_new_year_day dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+  let y = Date.year dt in
   dt = ((Date.create_exn ~y:y ~m:Month.Jan ~d:1) |> adjust_if_weekend)
 
 let is_martin_luther_king_birthday dt = 
@@ -39,15 +39,15 @@ let is_martin_luther_king_birthday dt =
   (Utils.is_day_in_nth_week 3 d) && w = Day_of_week.Mon && m = Month.Jan && y >= 1983
 
 let is_thanksgiving_day dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+  let (d, m, _, w) = Utils.extract_day_month_year_weekday dt in
   Utils.is_day_in_nth_week 4 d && w = Day_of_week.Thu && m = Month.Nov
 
 let is_independence_day dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+  let y = Date.year dt in
   dt = ((Date.create_exn ~y:y ~m:Month.Jul ~d:4) |> adjust_if_weekend)
 
 let is_chrismas_day dt =
-  let (d, m, y, w) = Utils.extract_day_month_year_weekday dt in
+  let y = Date.year dt in
   dt = ((Date.create_exn ~y:y ~m:Month.Dec ~d:25) |> adjust_if_weekend)
 
 let is_good_friday dt =

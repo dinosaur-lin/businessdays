@@ -1,23 +1,23 @@
 .PHONY: all clean test doc
 
 all:
-	jbuilder build @install
+	dune build @install
 
 clean:
-	jbuilder clean
+	dune clean
 
 test:
-	jbuilder runtest -j1 --no-buffer
+	dune runtest -j1 --no-buffer
 
 install:
-	jbuilder install
+	dune install
 
 uninstall:
-	jbuilder uninstall
+	dune uninstall
 
 doc:
-	jbuilder build @doc
+	dune build @doc
 
 cleanall:
-	jbuilder uninstall && jbuilder clean
+	dune uninstall && dune clean
 	rm -rf `find . -name .merlin`

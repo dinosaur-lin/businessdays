@@ -9,7 +9,7 @@ let name t = t.name
 let month_days year month =
   match month with
   | Month.Jan -> 31
-  | Month.Feb -> if Date.is_leap_year year then 29 else 28
+  | Month.Feb -> if Date.is_leap_year ~year:year then 29 else 28
   | Month.Mar -> 31
   | Month.Apr -> 30
   | Month.May -> 31
@@ -39,8 +39,8 @@ let is_end_of_month dt =
   | Month.Dec -> d = 31
 
 let init_cache_year t ~year ~is_holiday =
-  let begin_date = (Date.create_exn year Jan 1) in
-  let y_days = if Date.is_leap_year year then 366 else 365 in
+  let begin_date = (Date.create_exn ~y:year ~m:Jan ~d:1) in
+  let y_days = if Date.is_leap_year ~year:year then 366 else 365 in
   List.range 1 y_days ~stop:`inclusive |>
   List.map ~f:(fun d -> Date.add_days begin_date (d-1)) |>
   List.iter ~f:(fun dt -> if is_holiday dt then Hash_set.add t.cache dt else ())
@@ -51,7 +51,7 @@ let init_cache t start_year end_year is_holiday_local =
   done
 
 let is_holiday t dt =
-  match (Hash_set.find t.cache (fun d -> dt = d)) with
+  match Hash_set.find t.cache ~f:(fun d -> dt = d) with
   | Some _ -> true
   | None -> false
 

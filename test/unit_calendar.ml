@@ -4,7 +4,7 @@ open Calendar
 
 module To_test = struct
 
-  let c = Date.create_exn
+  let c y m d = Date.create_exn ~y:y ~m:m ~d:d
 
   let test_us_settlement () =
     let holidays = [
@@ -46,7 +46,7 @@ module To_test = struct
        (c 2018 Apr 1,c 2018 Apr 1);
        (c 2018 Jan 1,c 2018 Jan 16);
       ] in
-    List.map dts (fun (dt1,dt2) -> Calendar.business_days_between us_government_bond dt1 dt2)
+    List.map dts ~f:(fun (dt1,dt2) -> Calendar.business_days_between us_government_bond dt1 dt2)
 end
 
 let test_settlement () =
