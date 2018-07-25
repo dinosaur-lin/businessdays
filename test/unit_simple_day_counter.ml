@@ -16,10 +16,3 @@ let test_simple_day_counter () =
 let test_set = [
   "test_simple_day_counter", `Slow, test_simple_day_counter
 ]
-
-
-
-
-
-
-
