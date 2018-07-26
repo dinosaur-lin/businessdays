@@ -41,7 +41,7 @@ let begin_next_month dt =
 
 let first_month_days cal_type dt1 =
   let next_month_begin = begin_next_month dt1 in
-  Calendar.business_days_between cal_type dt1 next_month_begin
+  Calendar.business_days_between cal_type dt1 (Date.add_days next_month_begin (-1))
 
 let last_month_days cal_type dt2 =
   let end_last_month = Date.add_days (Date.create_exn ~y:(Date.year dt2) ~m:(Date.month dt2) ~d:1) (-1) in
@@ -66,12 +66,12 @@ let intermediate_years_days cal_type dt1 dt2 =
   List.fold_left ~init:0 ~f:(fun a b -> a + b)
 
 let remaining_month_days cal_type dt1 =
-  let m1 = (Date.month dt1 |> Month.to_int) + 1 in
+  let m1 = Date.month dt1 |> Month.to_int in
   let y = Date.year dt1 in
   month_days cal_type (m1 + 1) 12 y
 
 let begin_month_days cal_type dt2 =
-  let m2 = (Date.month dt2 |> Month.to_int) + 1 in
+  let m2 = (Date.month dt2 |> Month.to_int) in
   let y = Date.year dt2 in
   month_days cal_type 1 (m2-1) y
 
