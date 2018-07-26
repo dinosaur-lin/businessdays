@@ -17,7 +17,7 @@ module To_test = struct
   let test_business_252_day_count () = 
     let test_dates = [ 
         c 2017 Oct 30,c 2019 Dec 1;
-        c 2002 Feb 4,c 2003 May 16; 
+        c 2002 Feb 4,c 2003 May 16;
     ]
     in
     let module Dc = (val (Business_252.create Calendar.us_settlement): Day_counter_intf.S) in 

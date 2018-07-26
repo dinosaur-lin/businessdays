@@ -28,11 +28,7 @@ let business_days_year cal year =
 let business_days_year_month_from_cache cache cal year month =
   let outer_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int)) in
   let inner_cache = Hashtbl.find_or_add outer_cache year ~default:(fun _ -> Hashtbl.create (module Month)) in
-  Hashtbl.find_or_add inner_cache month ~default:(fun _ -> begin 
-    let n = business_days_month cal year month in
-    Out_channel.printf "year %d, month %s, n %d" year (Month.to_string month) n;
-    n
-  end)
+  Hashtbl.find_or_add inner_cache month ~default:(fun _ -> business_days_month cal year month)
 
 let business_days_year_from_cache cache cal year =
   let inner_cache = Hashtbl.find_or_add cache (Calendar.name cal) ~default:(fun _ -> Hashtbl.create (module Int)) in
@@ -48,8 +44,8 @@ let first_month_days cal_type dt1 =
   Calendar.business_days_between cal_type dt1 next_month_begin
 
 let last_month_days cal_type dt2 =
-  let end_last_month = Date.add_days (Date.create_exn ~y:(Date.year dt2) ~m:(Date.month dt2) ~d:1) (-1) in
-  Calendar.business_days_between cal_type end_last_month dt2
+  let begin_month = Date.create_exn ~y:(Date.year dt2) ~m:(Date.month dt2) ~d:1 in
+  Calendar.business_days_between cal_type begin_month dt2
 
 let month_days cal_type m1 m2 y =
   let months = List.range ~stop:`inclusive m1 m2 in
@@ -96,7 +92,6 @@ let create c =
         let inter_y = intermediate_years_days c dt1 dt2 in
         let begin_month = begin_month_days c dt2 in
         let last_month = last_month_days c dt2 in
-        Out_channel.printf  "last %d" last_month;
         first_month + remaining_month + inter_y + begin_month + last_month  
 
     let year_frac dt1 dt2 =
