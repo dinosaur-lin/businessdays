@@ -65,7 +65,7 @@ let rec adjust t dt c =
 
 let business_days_between t dt1 dt2 =
   let rec aux_b_days t dt1 dt2 =
-    if dt1 = dt2 then 0
+    if Date.(dt1 = dt2) then 0
     else if is_holiday t dt1 then aux_b_days t (Date.add_days dt1 1) dt2
     else 1 + (aux_b_days t (Date.add_days dt1 1) dt2) in
   let c = Date.compare dt1 dt2 in
