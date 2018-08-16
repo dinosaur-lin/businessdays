@@ -1,9 +1,9 @@
-opam-version: "2.0"
-maintainer: "Yunfeng Lin (yunfeng.lin04@gmail.com)"
-authors: [ "Yunfeng Lin (yunfeng.lin04@gmail.com)" ]
+opam-version: "1.2"
+maintainer: "yunfeng.lin04@gmail.com"
+authors: "Yunfeng Lin"
 license: "MIT"
 homepage: "https://github.com/dinosaur-lin/businessdays"
-dev-repo: "git@github.com:dinosaur-lin/businessdays.git"
+dev-repo: "https://github.com/dinosaur-lin/businessdays.git"
 bug-reports: "https://github.com/dinosaur-lin/businessdays/issues"
 doc: "http://github.com/dinosaur-lin/businessdays/"
 
@@ -11,13 +11,16 @@ name: "businessdays"
 version: "dev"
 
 build: [
-  ["jbuilder" "subst" "-n" name] {pinned}
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-j" jobs]
 ]
 
+build-test: [["dune" "runtest" "-j" jobs]]
+
 depends: [    
-  "jbuilder" {build & >= "1.0+beta19"}
+  "dune" {build & >= "1.0"}
   "core_kernel" {>= "v0.11.1"}
+  "alcotest"
 ]
 
 available: [ ocaml-version >= "4.07" ]
