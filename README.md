@@ -1,5 +1,7 @@
 # businessdays
 
+[![Build Status](https://travis-ci.org/dinosaur-lin/businessdays.svg?branch=master)](https://travis-ci.org/dinosaur-lin/businessdays)
+
 This is an implementation of business calendars used in fixed income. It is a port of quantlib's implementation.
 
 It includes business calendars and day counters.
