@@ -1,7 +1,7 @@
 type t = {
     comp: Compounding.t;
     r: float;
-    freq: float;
+    freq: Frequency.t;
     time: float;
 }
 
