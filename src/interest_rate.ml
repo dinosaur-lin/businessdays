@@ -2,7 +2,6 @@ type t = {
     comp: Compounding.t;
     r: float;
     freq: Frequency.t;
-    time: float;
 }
 
 let simple t time = 1.0 +. t.r *. time
@@ -18,3 +17,5 @@ let compound_factor t time =
     | Compounding.Continuous -> exp (t.r *. time)
     | Compounding.SimpleThenCompounted -> if time <= 1.0 /. (Frequency.to_float t.freq) then simple t time else compounded t time
     | Compounding.CompoundedThenSimple -> if time > 1.0 /. (Frequency.to_float t.freq) then simple t time else compounded t time
+
+let discount_factor t time = 1.0 /. compound_factor t time
