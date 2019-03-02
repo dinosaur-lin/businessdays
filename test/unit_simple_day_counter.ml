@@ -7,8 +7,8 @@ module To_test = struct
     let periods = [ 3; 6; 12 ] (* months *) in 
     let first = Date.create_exn ~y:2002 ~m:Jan ~d:1 in 
     let ends = List.map periods ~f:(fun p -> Date.add_months first p) in
-    let dc = Day_counter2.Simple in 
-    List.map ends ~f:(fun e -> Day_counter2.year_frac dc first e)
+    let dc = Day_counter.Simple in 
+    List.map ends ~f:(fun e -> Day_counter.year_frac dc first e)
 end
 
 let test_simple_day_counter () =

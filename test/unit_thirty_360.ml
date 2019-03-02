@@ -29,12 +29,12 @@ module To_test = struct
     ]
 
   let test_thirty_360_bond_basis () =
-    let dc = Day_counter2.Thirty360(BondBasis) in 
-    List.map test_data ~f:(fun (dt1,dt2) -> Day_counter2.day_count dc dt1 dt2)
+    let dc = Day_counter.Thirty360(BondBasis) in 
+    List.map test_data ~f:(fun (dt1,dt2) -> Day_counter.day_count dc dt1 dt2)
 
   let test_thirty_360_euro_bond_basis () =
-    let dc = Day_counter2.Thirty360(EuroBondBasis) in
-    List.map test_data ~f:(fun (dt1,dt2) -> Day_counter2.day_count dc dt1 dt2)
+    let dc = Day_counter.Thirty360(EuroBondBasis) in
+    List.map test_data ~f:(fun (dt1,dt2) -> Day_counter.day_count dc dt1 dt2)
 end
 
 let test_thirty_360_bond_basis () =
