@@ -75,27 +75,20 @@ let begin_month_days cal_type dt2 =
   let y = Date.year dt2 in
   month_days cal_type 1 (m2-1) y
 
-let create c =
-  let module DC: Day_counter_intf.S  = struct 
-    let name =  "Business/252(" ^ (Calendar.name c) ^ ")"
-    
-    let day_count dt1 dt2 =
-      if same_month dt1 dt2 || Date.(dt1 > dt2) then
-        Calendar.business_days_between c dt1 dt2
-      else if same_year dt1 dt2 then 
-        let first = first_month_days c dt1 in
-        let inter = intermediate_month_days c dt1 dt2 in
-        let last = last_month_days c dt2 in
-        first + inter + last
-      else let first_month = first_month_days c dt1 in
-        let remaining_month = remaining_month_days c dt1 in
-        let inter_y = intermediate_years_days c dt1 dt2 in
-        let begin_month = begin_month_days c dt2 in
-        let last_month = last_month_days c dt2 in
-        first_month + remaining_month + inter_y + begin_month + last_month  
+let day_count c dt1 dt2 =
+  if same_month dt1 dt2 || Date.(dt1 > dt2) then
+    Calendar.business_days_between c dt1 dt2
+  else if same_year dt1 dt2 then 
+    let first = first_month_days c dt1 in
+    let inter = intermediate_month_days c dt1 dt2 in
+    let last = last_month_days c dt2 in
+    first + inter + last
+  else let first_month = first_month_days c dt1 in
+    let remaining_month = remaining_month_days c dt1 in
+    let inter_y = intermediate_years_days c dt1 dt2 in
+    let begin_month = begin_month_days c dt2 in
+    let last_month = last_month_days c dt2 in
+    first_month + remaining_month + inter_y + begin_month + last_month  
 
-    let year_frac dt1 dt2 =
-      float_of_int(day_count dt1 dt2) /. 252.0      
-  end
-  in 
-  (module DC: Day_counter_intf.S)
+let year_frac c dt1 dt2 =
+  float_of_int(day_count c dt1 dt2) /. 252.0
