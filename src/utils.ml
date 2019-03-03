@@ -17,3 +17,6 @@ let extract_day_month_year d = (
   Date.month d |> Month.to_int,
   Date.day d
 )
+
+let month_int dt =
+  Date.month dt |> Month.to_int
