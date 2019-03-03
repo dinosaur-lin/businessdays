@@ -15,5 +15,5 @@ let test_simple_day_counter () =
   Alcotest.(check (list (float 1e-12))) "test simple day counter" [0.25; 0.5; 1.0] (To_test.test_simple_day_counter ())
 
 let test_set = [
-  "test_simple_day_counter", `Slow, test_simple_day_counter
+  "test_simple_day_counter", `Quick, test_simple_day_counter
 ]

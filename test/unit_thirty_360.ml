@@ -48,6 +48,6 @@ let test_thirty_360_euro_bond_basis () =
                                                                  28; 28; 5] (To_test.test_thirty_360_euro_bond_basis ())
 
 let test_set = [
-  "test thirty 360 bond basis", `Slow, test_thirty_360_bond_basis;
-  "test thirty 360 euro bond basis", `Slow, test_thirty_360_euro_bond_basis;
+  "test thirty 360 bond basis", `Quick, test_thirty_360_bond_basis;
+  "test thirty 360 euro bond basis", `Quick, test_thirty_360_euro_bond_basis;
 ]

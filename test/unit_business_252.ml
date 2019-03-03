@@ -33,6 +33,6 @@ let test_business_252_year_frac () =
   1.2817460317460319;0.5833333333333334] (To_test.test_business_252_year_frac ())
 
 let test_set = [
-  "test_busienss_252_day_count", `Slow, test_business_252_day_count;
-  "test_busienss_252_year_frac", `Slow, test_business_252_year_frac
+  "test_busienss_252_day_count", `Quick, test_business_252_day_count;
+  "test_busienss_252_year_frac", `Quick, test_business_252_year_frac
 ]
