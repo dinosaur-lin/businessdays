@@ -72,15 +72,15 @@ let test_good_friday () =
   Alcotest.(check bool) "test good friday" true (To_test.test_good_friday ())  
 
 let test_set = [
-  "test new year day", `Slow, test_new_year_day;
-  "test martin luther king birthday", `Slow, test_martin_luther_king_birthday;
-  "test washington birthday", `Slow, test_washington_birthday;
-  "test memorial day", `Slow, test_memorial_day;
-  "test independence day", `Slow, test_independence_day;
-  "test labor day", `Slow, test_labor_day;
-  "test columbus day", `Slow, test_columbus_day;
-  "test veterans day", `Slow, test_veterans_day;
-  "test thanksgiving day", `Slow, test_thanksgiving_day;
-  "test christmas day", `Slow, test_christmas_day;
-  "test good friday", `Slow, test_good_friday;
+  "test new year day", `Quick, test_new_year_day;
+  "test martin luther king birthday", `Quick, test_martin_luther_king_birthday;
+  "test washington birthday", `Quick, test_washington_birthday;
+  "test memorial day", `Quick, test_memorial_day;
+  "test independence day", `Quick, test_independence_day;
+  "test labor day", `Quick, test_labor_day;
+  "test columbus day", `Quick, test_columbus_day;
+  "test veterans day", `Quick, test_veterans_day;
+  "test thanksgiving day", `Quick, test_thanksgiving_day;
+  "test christmas day", `Quick, test_christmas_day;
+  "test good friday", `Quick, test_good_friday;
 ]

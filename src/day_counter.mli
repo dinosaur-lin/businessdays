@@ -7,6 +7,7 @@ type t_thirty360 =
 
 type t = 
   | Thirty360 of t_thirty360
+  | Business252 of Calendar.t
   | Simple
 
 val name: t -> string
