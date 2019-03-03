@@ -19,3 +19,6 @@ let day_count dt1 dt2 =
   + 30 * ((Date.month dt2 |> Month.to_int) - (Date.month dt1 |> Month.to_int) - 1)
   + (max 0 (30 - (Date.day dt1)))
   + (min 30 (Date.day dt2))
+
+let year_frac dc = 
+  (float_of_int dc) /. 360.0

@@ -12,8 +12,7 @@ module To_test = struct
         c 2003 May 16,c 2003 Dec 17
     ]
     in 
-    let module Dc = (val (Business_252.create Calendar.us_settlement): Day_counter_intf.S) in 
-    List.map test_dates ~f:(fun (d1,d2) -> Dc.year_frac d1 d2)    
+    List.map test_dates ~f:(fun (d1,d2) -> Day_counter.year_frac (Business252(Calendar.us_settlement)) d1 d2)    
 
   let test_business_252_day_count () = 
     let test_dates = [ 
@@ -21,8 +20,7 @@ module To_test = struct
         c 2002 Feb 4,c 2003 May 16;
     ]
     in
-    let module Dc = (val (Business_252.create Calendar.us_settlement): Day_counter_intf.S) in 
-    List.map test_dates ~f:(fun (d1,d2) -> Dc.day_count d1 d2)    
+    List.map test_dates ~f:(fun (d1,d2) -> Day_counter.day_count (Business252(Calendar.us_settlement)) d1 d2)    
 end
 
 let test_business_252_day_count () =

@@ -32,12 +32,11 @@ let rec day_count dc dt1 dt2 =
   | Business252(ct) -> 
     Business252.day_count ct dt1 dt2
   | Simple ->
-    let dc1 = Thirty360(BondBasis) in  
-    day_count dc1 dt1 dt2
+    day_count (Thirty360(BondBasis)) dt1 dt2
 
 let rec year_frac dc dt1 dt2 = 
   match dc with 
-  | Thirty360(_) -> (float_of_int (day_count dc dt1 dt2)) /. 360.0
+  | Thirty360(_) -> Thirty360.year_frac (day_count dc dt1 dt2)
   | Business252(c) -> Business252.year_frac c dt1 dt2
   | Simple -> 
     let dd1 = Date.day dt1 in
@@ -49,4 +48,4 @@ let rec year_frac dc dt1 dt2 =
        (dd1 < dd2 && Calendar.is_end_of_month dt1)
     then (((Date.year dt2) - (Date.year dt1)) |> float_of_int) +.
          (((Utils.month_int dt2) - (Utils.month_int dt1)) |> float_of_int) /. 12.0
-    else let dc1 = Thirty360(BondBasis) in year_frac dc1 dt1 dt2
+    else year_frac (Thirty360(BondBasis)) dt1 dt2
