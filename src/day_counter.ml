@@ -1,43 +1,29 @@
 open! Core_kernel 
 
-type t_thirty360 =
-  | BondBasis
-  | EuroBondBasis
-  | Italian
-
 type t = 
-  | Thirty360 of t_thirty360
+  | Thirty360 of Thirty_360.t
   | Business252 of Calendar.t
   | Simple
 
 let name dc = 
   match dc with 
-  | Thirty360(BondBasis) -> "30/360 (Bond Basis)"
-  | Thirty360(EuroBondBasis) -> "30E/360 (Eurobond Basis)"
-  | Thirty360(Italian) -> "30/360 (Italian)"
+  | Thirty360(typ) -> "30/360 (" ^ (Thirty_360.name typ) ^ ")"
   | Business252(c) -> "Business252(" ^ (Calendar.name c) ^ ")"
   | Simple -> "Simple"
 
 let rec day_count dc dt1 dt2 = 
   match dc with 
   | Thirty360(sub_type) ->
-  begin
-    let (d1,d2) = match sub_type with 
-    | BondBasis -> Thirty360.bondbasis_adjust (dt1,dt2)
-    | EuroBondBasis -> (dt1,dt2)
-    | Italian -> Thirty360.italian_adjust (dt1,dt2)
-    in
-    Thirty360.day_count d1 d2
-  end
+    Thirty_360.day_count sub_type dt1 dt2
   | Business252(ct) -> 
-    Business252.day_count ct dt1 dt2
+    Business_252.day_count ct dt1 dt2
   | Simple ->
     day_count (Thirty360(BondBasis)) dt1 dt2
 
 let rec year_frac dc dt1 dt2 = 
   match dc with 
-  | Thirty360(_) -> Thirty360.year_frac (day_count dc dt1 dt2)
-  | Business252(c) -> Business252.year_frac c dt1 dt2
+  | Thirty360(_) -> Thirty_360.year_frac (day_count dc dt1 dt2)
+  | Business252(c) -> Business_252.year_frac c dt1 dt2
   | Simple -> 
     let dd1 = Date.day dt1 in
     let dd2 = Date.day dt2 in 
