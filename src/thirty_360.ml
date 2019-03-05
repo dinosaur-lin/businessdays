@@ -1,5 +1,23 @@
 open! Core_kernel
 
+type t =
+| BondBasis
+| EuroBondBasis
+| Italian
+
+let name typ = 
+  match typ with 
+  | BondBasis -> "Bond Basis"
+  | EuroBondBasis -> "Euro Bond Basis"
+  | Italian -> "Italian"
+
+let thirty_360_day_count dt1 dt2 =
+  360 * ((Date.year dt2) - (Date.year dt1)) 
+  + 30 * ((Date.month dt2 |> Month.to_int) - (Date.month dt1 |> Month.to_int) - 1)
+  + (max 0 (30 - (Date.day dt1)))
+  + (min 30 (Date.day dt2))
+
+
 let bondbasis_adjust (d1,d2) =
   let (_,_,dd1) = Utils.extract_day_month_year d1 in
   let (yy2,mm2,dd2) = Utils.extract_day_month_year d2 in
@@ -14,11 +32,13 @@ let italian_adjust (d1,d2) =
   let ddd2 = modify_day mm2 dd2 in
   (Date.create_exn ~y:yy1 ~m:(Month.of_int_exn mm1) ~d:ddd1),(Date.create_exn ~y:yy2 ~m:(Month.of_int_exn mm2) ~d:ddd2)
 
-let day_count dt1 dt2 =
-  360 * ((Date.year dt2) - (Date.year dt1)) 
-  + 30 * ((Date.month dt2 |> Month.to_int) - (Date.month dt1 |> Month.to_int) - 1)
-  + (max 0 (30 - (Date.day dt1)))
-  + (min 30 (Date.day dt2))
+let day_count typ dt1 dt2 =
+  let (d1,d2) = match typ with 
+  | BondBasis -> bondbasis_adjust (dt1,dt2)
+  | EuroBondBasis -> (dt1,dt2)
+  | Italian -> italian_adjust (dt1,dt2)
+  in
+  thirty_360_day_count d1 d2
 
 let year_frac dc = 
   (float_of_int dc) /. 360.0

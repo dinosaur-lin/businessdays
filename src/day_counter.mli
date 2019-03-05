@@ -1,12 +1,7 @@
 open! Core_kernel
 
-type t_thirty360 =
-  | BondBasis
-  | EuroBondBasis
-  | Italian
-
 type t = 
-  | Thirty360 of t_thirty360
+  | Thirty360 of Thirty_360.t
   | Business252 of Calendar.t
   | Simple
 
